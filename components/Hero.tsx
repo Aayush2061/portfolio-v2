@@ -1,0 +1,282 @@
+'use client';
+import { useEffect, useRef } from 'react';
+
+export default function Hero() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Topographic contour lines
+    const lines: { points: {x: number, y: number}[], opacity: number, speed: number }[] = [];
+    for (let i = 0; i < 12; i++) {
+      const points = [];
+      const baseY = (canvas.height / 12) * i + Math.random() * 60;
+      for (let x = -50; x < canvas.width + 50; x += 40) {
+        points.push({
+          x,
+          y: baseY + Math.sin(x * 0.008 + i) * 40 + Math.sin(x * 0.02 + i * 2) * 20,
+        });
+      }
+      lines.push({ points, opacity: Math.random() * 0.08 + 0.02, speed: Math.random() * 0.3 + 0.1 });
+    }
+
+    let t = 0;
+    let animId: number;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      t += 0.005;
+
+      lines.forEach((line) => {
+        ctx.beginPath();
+        line.points.forEach((p, i) => {
+          const y = p.y + Math.sin(t + i * 0.3) * 8;
+          if (i === 0) ctx.moveTo(p.x, y);
+          else ctx.lineTo(p.x, y);
+        });
+        ctx.strokeStyle = `rgba(79, 255, 176, ${line.opacity})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      });
+
+      animId = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
+
+  return (
+    <section
+      id="top"
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+        padding: '0 2rem',
+      }}
+    >
+      {/* Topographic canvas background */}
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Radial glow left */}
+      <div style={{
+        position: 'absolute',
+        left: '-5%',
+        top: '30%',
+        width: '500px',
+        height: '500px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(79,255,176,0.07) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Main content grid */}
+      <div style={{
+        position: 'relative',
+        zIndex: 2,
+        maxWidth: '960px',
+        margin: '0 auto',
+        width: '100%',
+        minHeight: '100vh',
+        paddingTop: '60px',
+        display: 'grid',
+        gridTemplateColumns: '1fr 300px',
+        gap: '3rem',
+        alignItems: 'center',
+        alignContent: 'center',
+      }}>
+
+        {/* LEFT: text */}
+        <div>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '2rem',
+            padding: '0.3rem 0.8rem',
+            border: '1px solid var(--accent-dim)',
+            borderRadius: '2px',
+            background: 'var(--accent-glow)',
+          }}>
+            <span style={{
+              width: '6px', height: '6px',
+              borderRadius: '50%',
+              background: 'var(--accent)',
+              display: 'inline-block',
+              animation: 'pulse-accent 2s infinite',
+            }} />
+            <span className="section-label">Open to internships &amp; full-time roles</span>
+          </div>
+
+          <h1 style={{
+            fontSize: 'clamp(2.8rem, 6vw, 5rem)',
+            fontWeight: 800,
+            lineHeight: 1.05,
+            letterSpacing: '-0.02em',
+            marginBottom: '1.25rem',
+          }}>
+            Aayush<br />
+            <span style={{ color: 'var(--accent)' }}>Bhandari</span>
+          </h1>
+
+          <p className="font-serif" style={{
+            fontSize: 'clamp(1rem, 2vw, 1.3rem)',
+            color: 'var(--text-muted)',
+            lineHeight: 1.6,
+            marginBottom: '0.5rem',
+            fontStyle: 'italic',
+          }}>
+            Full Stack &amp; AI Application Developer
+          </p>
+
+          <p style={{
+            fontFamily: 'DM Mono, monospace',
+            fontSize: '0.72rem',
+            color: 'var(--text-dim)',
+            marginBottom: '2.5rem',
+            letterSpacing: '0.05em',
+          }}>
+            Kathmandu, Nepal — IOE Tribhuvan University
+          </p>
+
+          <p style={{
+            fontSize: '0.82rem',
+            color: 'var(--text-muted)',
+            maxWidth: '460px',
+            lineHeight: 1.9,
+            marginBottom: '2.5rem',
+          }}>
+            Building production-ready web &amp; mobile apps with React, Node.js, React Native and AI.
+            Shipped Jachao — a healthtech app with 1,000+ Play Store downloads.
+          </p>
+
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            {[
+              { label: 'Resume ↗', href: '/resume.pdf', primary: true },
+              { label: 'GitHub ↗', href: 'https://github.com/yourgithub', primary: false },
+              { label: 'LinkedIn ↗', href: 'https://linkedin.com/in/yourlinkedin', primary: false },
+            ].map((btn) => (
+              <a
+                key={btn.label}
+                href={btn.href}
+                target="_blank"
+                style={{
+                  padding: '0.7rem 1.5rem',
+                  background: btn.primary ? 'var(--accent)' : 'transparent',
+                  color: btn.primary ? '#0a0a0a' : 'var(--text)',
+                  border: btn.primary ? 'none' : '1px solid var(--border-light)',
+                  fontFamily: 'DM Mono, monospace',
+                  fontSize: '0.72rem',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  textDecoration: 'none',
+                  fontWeight: btn.primary ? 600 : 400,
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  if (btn.primary) e.currentTarget.style.opacity = '0.85';
+                  else e.currentTarget.style.borderColor = 'var(--accent)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                  if (!btn.primary) e.currentTarget.style.borderColor = 'var(--border-light)';
+                }}
+              >
+                {btn.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT: photo */}
+        <div style={{ position: 'relative', flexShrink: 0 }}>
+          {/* Accent border offset */}
+          <div style={{
+            position: 'absolute',
+            top: '12px',
+            left: '12px',
+            width: '300px',
+            height: '380px',
+            border: '1px solid var(--accent)',
+            opacity: 0.4,
+            zIndex: 0,
+          }} />
+
+          {/* Photo */}
+          <div style={{
+            position: 'relative',
+            zIndex: 1,
+            width: '300px',
+            height: '380px',
+            overflow: 'hidden',
+          }}>
+            <img
+              src="/me.jpeg"
+              alt="Aayush Bhandari — trekking in the Himalayas"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center top',
+                filter: 'grayscale(30%) contrast(1.05) brightness(0.88)',
+                display: 'block',
+              }}
+            />
+            {/* Subtle green tint overlay */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to bottom, transparent 60%, rgba(79,255,176,0.08) 100%)',
+            }} />
+          </div>
+
+          {/* Location tag */}
+          <div style={{
+            position: 'absolute',
+            bottom: '-16px',
+            right: '-16px',
+            zIndex: 2,
+            background: 'var(--bg)',
+            border: '1px solid var(--border-light)',
+            padding: '0.5rem 0.75rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+          }}>
+            <span style={{ fontSize: '0.7rem' }}>🏔️</span>
+            <span style={{
+              fontFamily: 'DM Mono, monospace',
+              fontSize: '0.6rem',
+              color: 'var(--accent)',
+              letterSpacing: '0.1em',
+            }}>
+              Himalayan trail
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

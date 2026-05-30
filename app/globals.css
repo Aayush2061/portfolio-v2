@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap');
+
+@import "tailwindcss";
+
+/* =========================================
+   ROOT VARIABLES
+========================================= */
+
+:root {
+  --bg: #050505;
+  --bg-2: #0d0d0d;
+  --bg-3: #141414;
+
+  --border: #1f1f1f;
+  --border-light: #2b2b2b;
+
+  --text: #f5f5f5;
+  --text-muted: #9ca3af;
+  --text-dim: #525252;
+
+  --accent: #67e8f9;
+  --accent-dim: rgba(103, 232, 249, 0.12);
+  --accent-glow: rgba(103, 232, 249, 0.18);
+}
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* =========================================
+   BODY
+========================================= */
+
+body {
+  background:
+    radial-gradient(circle at top left,
+      rgba(103, 232, 249, 0.06),
+      transparent 30%),
+
+    radial-gradient(circle at bottom right,
+      rgba(103, 232, 249, 0.04),
+      transparent 25%),
+
+    var(--bg);
+
+  color: var(--text);
+
+  font-family: 'Inter', sans-serif;
+
+  overflow-x: hidden;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Syne', sans-serif;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.font-mono {
+  font-family: 'DM Mono', monospace;
+}
+
+.font-serif {
+  font-family: 'Instrument Serif', serif;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-dim {
+  color: var(--text-dim);
+}
+
+/* =========================================
+   LAYOUT UTILITIES
+========================================= */
+
+.section {
+  padding: 7rem 0;
+}
+
+.container-custom {
+  width: min(1120px, 92%);
+  margin-inline: auto;
+}
+
+/* =========================================
+   SECTION LABEL
+========================================= */
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.24em;
+
+  text-transform: uppercase;
+
+  color: var(--accent);
+}
+
+/* =========================================
+   CARD STYLING
+========================================= */
+
+.card {
+  background: rgba(255, 255, 255, 0.02);
+
+  border: 1px solid var(--border);
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(103, 232, 249, 0.25);
+
+  background: rgba(255, 255, 255, 0.03);
+
+  transform: translateY(-4px);
+}
+
+/* =========================================
+   GRID / BORDERS
+========================================= */
+
+.grid-line {
+  border-color: var(--border);
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* =========================================
+   TEXT SELECTION
+========================================= */
+
+::selection {
+  background: var(--accent);
+  color: #000;
+}
+
+/* =========================================
+   NOISE TEXTURE
+========================================= */
+
+body::before {
+  content: '';
+
+  position: fixed;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 1000;
+
+  opacity: 0.35;
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* =========================================
+   OPTIONAL GLOW UTILITY
+========================================= */
+
+.glow {
+  box-shadow: 0 0 40px var(--accent-glow);
+}

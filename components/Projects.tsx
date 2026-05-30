@@ -10,9 +10,9 @@ const projects = [
     stack: ['React Native', 'Node.js', 'Flask', 'MongoDB', 'Gemini API', 'GCP'],
     highlights: ['1,000+ Play Store downloads', 'Deployed on Google Cloud', 'Next.js landing page'],
     links: {
-      playstore: 'https://play.google.com/store',
-      github: 'https://github.com/yourgithub',
-      live: 'https://jachao.com',
+      playstore: 'https://play.google.com/store/apps/details?id=com.jachao.app&hl=en_US',
+      github: 'https://github.com/Aayush2061/jachaoo',
+      live: 'https://www.jachaoo.com/',
     },
     featured: true,
     accentColor: '#4fffb0',
@@ -26,7 +26,7 @@ const projects = [
     stack: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
     highlights: ['JWT Authentication', 'REST APIs', 'Deployed on Render'],
     links: {
-      github: 'https://github.com/yourgithub',
+      github: 'https://github.com/Aayush2061/ecommerce-webapp',
       live: '#',
     },
     featured: false,
@@ -41,7 +41,7 @@ const projects = [
     stack: ['JavaScript', 'HTML/CSS', 'Chrome Extension API'],
     highlights: ['Persistent storage', 'Instant capture', 'Clean popup UI'],
     links: {
-      github: 'https://github.com/yourgithub',
+      github: 'https://github.com/Aayush2061/word-saver',
     },
     featured: false,
     accentColor: '#4fffb0',

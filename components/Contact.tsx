@@ -54,7 +54,7 @@ export default function Contact() {
           </p>
 
           <a
-            href="mailto:yourmail@gmail.com"
+            href="https://wa.me/9779765440712"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -73,7 +73,7 @@ export default function Contact() {
             onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.85')}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
           >
-            Say hello ↗
+            WhatsApp ↗
           </a>
         </div>
 
@@ -81,18 +81,18 @@ export default function Contact() {
           {[
             {
               label: 'Email',
-              value: 'yourmail@gmail.com',
-              href: 'mailto:yourmail@gmail.com',
+              value: 'aayushbhandari6789@gmail.com',
+              href: 'mailto:aayushbhandari6789@gmail.com',
             },
             {
               label: 'LinkedIn',
-              value: 'linkedin.com/in/yourlinkedin',
-              href: 'https://linkedin.com/in/yourlinkedin',
+              value: 'linkedin.com/in/aayush-bhandari-68b70933a',
+              href: 'https://linkedin.com/in/aayush-bhandari-68b70933a',
             },
             {
               label: 'GitHub',
-              value: 'github.com/yourgithub',
-              href: 'https://github.com/yourgithub',
+              value: 'github.com/Aayush2061',
+              href: 'https://github.com/Aayush2061',
             },
           ].map((item, i) => (
             <div

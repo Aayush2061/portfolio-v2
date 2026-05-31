@@ -66,18 +66,6 @@ export default function About() {
             We built it from scratch: React Native frontend, Node.js + Flask backend, MongoDB, Gemini
             API, all deployed on Google Cloud.
           </p>
-
-          <p
-            style={{
-              fontSize: '0.85rem',
-              color: 'var(--text-muted)',
-              lineHeight: 1.9,
-            }}
-          >
-            When I&apos;m not building, I&apos;m trekking. Annapurna Base Camp, Mardi Himal, a bike
-            ride to Mustang — I find the same problem-solving clarity in mountains that I find in
-            code.
-          </p>
         </div>
 
         {/* Right: quick facts */}
@@ -96,8 +84,8 @@ export default function About() {
               { label: 'University', value: 'IOE, Tribhuvan University' },
               { label: 'Degree', value: 'B.E. Computer Engineering' },
               { label: 'Year', value: '4th Year (7th Semester)' },
-              { label: 'Entrance Rank', value: '#93 — IOE Entrance Exam' },
-              { label: 'Location', value: 'Kathmandu, Nepal' },
+              // { label: 'Entrance Rank', value: '#93 — IOE Entrance Exam' },
+              { label: 'Location', value: 'Lalitpur, Nepal' },
               { label: 'Focus', value: 'Full Stack · Mobile · AI' },
             ].map((item, i) => (
               <div

@@ -1,4 +1,120 @@
 'use client';
+import { useState, useEffect } from 'react';
+
+const jachaoScreenshots = [
+  '/jachao-ss/ss1.webp',
+  '/jachao-ss/ss2.webp',
+  '/jachao-ss/ss3.webp',
+  '/jachao-ss/ss4.webp',
+  '/jachao-ss/ss5.webp',
+  '/jachao-ss/ss6.webp',
+  '/jachao-ss/ss7.webp',
+  '/jachao-ss/ss8.webp',
+];
+
+function ScreenshotCarousel() {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const total = jachaoScreenshots.length;
+
+  useEffect(() => {
+    if (paused) return;
+    const interval = setInterval(() => {
+      setCurrent((c) => (c + 1) % total);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [paused, total]);
+
+  return (
+    <div style={{ marginTop: '1.5rem' }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* Main image */}
+      <div style={{
+        width: '100%', height: '380px',
+        overflow: 'hidden', border: '1px solid var(--border)',
+        position: 'relative', background: 'var(--bg-3)',
+      }}>
+        <img
+          key={current}
+          src={jachaoScreenshots[current]}
+          alt={`Jachao screenshot ${current + 1}`}
+          style={{
+            width: '100%', height: '100%',
+            objectFit: 'contain', display: 'block',
+            animation: 'fadeIn 0.4s ease',
+          }}
+        />
+
+        {/* Prev */}
+        <button
+          onClick={() => { setPaused(true); setCurrent((c) => (c - 1 + total) % total); }}
+          style={{
+            position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)',
+            background: 'rgba(10,10,10,0.85)', border: '1px solid var(--border-light)',
+            color: 'var(--text)', width: '30px', height: '30px',
+            cursor: 'pointer', fontSize: '1rem', display: 'flex',
+            alignItems: 'center', justifyContent: 'center',
+          }}
+        >‹</button>
+
+        {/* Next */}
+        <button
+          onClick={() => { setPaused(true); setCurrent((c) => (c + 1) % total); }}
+          style={{
+            position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)',
+            background: 'rgba(10,10,10,0.85)', border: '1px solid var(--border-light)',
+            color: 'var(--text)', width: '30px', height: '30px',
+            cursor: 'pointer', fontSize: '1rem', display: 'flex',
+            alignItems: 'center', justifyContent: 'center',
+          }}
+        >›</button>
+
+        {/* Counter */}
+        <div style={{
+          position: 'absolute', bottom: '8px', right: '8px',
+          background: 'rgba(10,10,10,0.85)', padding: '0.2rem 0.5rem',
+          fontFamily: 'DM Mono, monospace', fontSize: '0.55rem',
+          color: 'var(--text-dim)', letterSpacing: '0.1em',
+        }}>
+          {current + 1} / {total}
+        </div>
+
+        {/* Auto-play indicator */}
+        <div style={{
+          position: 'absolute', bottom: '8px', left: '8px',
+          fontFamily: 'DM Mono, monospace', fontSize: '0.55rem',
+          color: paused ? 'var(--text-dim)' : 'var(--accent)',
+          letterSpacing: '0.1em',
+        }}>
+          {paused ? '⏸ paused' : '▶ auto'}
+        </div>
+      </div>
+
+      {/* Dot indicators */}
+      <div style={{
+        display: 'flex', gap: '6px', marginTop: '10px',
+        justifyContent: 'center',
+      }}>
+        {jachaoScreenshots.map((_, i) => (
+          <div
+            key={i}
+            onClick={() => { setPaused(true); setCurrent(i); }}
+            style={{
+              width: i === current ? '20px' : '6px',
+              height: '6px',
+              borderRadius: '3px',
+              background: i === current ? 'var(--accent)' : 'var(--border-light)',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const projects = [
   {
@@ -290,30 +406,8 @@ export default function Projects() {
                   </div>
                 ))}
 
-                {/* Placeholder for screenshot */}
-                {project.featured && (
-                  <div
-                    style={{
-                      marginTop: '1.5rem',
-                      border: '1px dashed var(--border-light)',
-                      padding: '2rem',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <p
-                      style={{
-                        fontFamily: 'DM Mono, monospace',
-                        fontSize: '0.65rem',
-                        color: 'var(--text-dim)',
-                        letterSpacing: '0.1em',
-                      }}
-                    >
-                      Add screenshot here
-                      <br />
-                      <span style={{ color: 'var(--accent)' }}>public/jachao-preview.png</span>
-                    </p>
-                  </div>
-                )}
+                {/* Screenshot carousel for featured project */}
+                {project.featured && <ScreenshotCarousel />}
               </div>
             </div>
           </div>

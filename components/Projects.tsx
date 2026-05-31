@@ -150,14 +150,15 @@ const projects = [
   },
   {
     number: '03',
-    name: 'Word Saver Chrome Extension',
-    tagline: 'Browser Productivity Tool',
+    name: 'MERN Developer Portfolio',
+    tagline: 'Personal Portfolio Website',
     description:
-      'Chrome extension for saving important words, sentences and notes while browsing any website. Features persistent local storage and a clean popup UI for quick access.',
-    stack: ['JavaScript', 'HTML/CSS', 'Chrome Extension API'],
-    highlights: ['Persistent storage', 'Instant capture', 'Clean popup UI'],
+      'Personal portfolio website built with the MERN stack showcasing projects, skills, and experience. Features a clean UI with React frontend, Node.js backend, and MongoDB for data management.',
+    stack: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'HTML/CSS'],
+    highlights: ['MERN stack', 'Responsive design', 'Dynamic content'],
     links: {
-      github: 'https://github.com/Aayush2061/word-saver',
+      github: 'https://github.com/Aayush2061/portfolio',
+      live: '#',
     },
     featured: false,
     accentColor: '#4fffb0',
